@@ -1,0 +1,68 @@
+# Parameters for the point cloud analysis (corn3dgs cloud / clouds / harvest / growth).
+# Every value here has the same default in src/corn3dgs/config.py, so you only need to keep
+# the lines you want to change. The section headers are just for reading; key names must be unique.
+
+[layout]
+subtrays     = { c12 = 1, c34 = 3, c56 = 5 }  # selection suffix -> smallest column number in it
+sub_w_cm     = 28.0                # sub-tray outer size (cm); the fitted base rectangle sets the scale from this
+sub_d_cm     = 54.0
+pod_cm       = 10.0                # each pod is 10 x 10 cm
+n_cols       = 2
+n_rows       = 5
+max_out_cm   = 20.0                # points further than this from every sub-tray are not given to any pod
+sampled_pods = ["a1", "a6", "e1", "e6", "c3", "c4"]   # the destructively sampled pods
+a_at_bottom  = true                # only used when there is no _rowA.ply: row A at the bottom of the top view
+col_flip     = false               # only for a cloud with a single sub-tray: swap the two columns
+
+[levelling]
+level_from  = "base"               # "base" = fit the plane to the dark sub-tray bottoms; "floor" = use _floor.ply
+base_v      = 0.30                 # base points are darker than this (HSV value) ...
+base_s      = 0.30                 # ... greyer than this (HSV saturation) ...
+base_h_frac = 0.30                 # ... and in the lowest 30% of the cloud height
+foot_pct    = 1.0                  # rectangle edges are the 1% / 99% percentiles, so stray points do not stretch it
+
+[cuts]
+floor_cm          = 1.5            # anything this close to height 0 is floor
+pod_top_cm        = 14.0           # inside the sub-tray outlines, below this is pod / soil / tray (pod is 13.5 cm tall)
+floor_out_cm      = 5.0            # outside the outlines, below this is floor (the floor reconstructs a few cm thick)
+pod_dark_band_cm  = 4.0            # dark, non-green points up to pod_top_cm + this are pod rim too (tray slightly tilted)
+leaf_below_rim_cm = 5.0            # green points down to pod_top_cm - this are still leaves (the soil is deeper, see soil_below_rim_cm)
+
+[big_tray]
+big_tray_rim_cm   = 14.0           # outside the outlines on big-tray dates, cut everything below this
+rim_top_cm        = 13.5           # the found pod rim is moved to this height
+soil_below_rim_cm = 8.0            # the medium surface sits this far below the pod rim (measured by hand, 7-9 cm).
+                                   # Only used to put cloud heights on the hand-measurement scale (corn3dgs manual)
+soil_edge_frac    = 0.10           # soil = first height where green points reach 10% of their peak
+rim_step_min      = 0.15           # the rim must be a drop of at least 15% of the peak density
+rim_above_soil_cm = 5.0            # fallback when no rim is found: soil + this
+rim_edge_min      = 3.0            # rim_from = "edge": the dark points must thin out at least 3x within 1 cm at the rim
+
+[floaters]
+float_k           = 6              # look at the distance to the 6th nearest neighbour ...
+float_factor      = 3.0            # ... and call a point isolated if it is 3x the cloud's own median
+float_min_cluster = 30             # detached clumps with fewer points than this are floaters too
+float_above_pct   = 90             # only points above the 90th percentile of canopy height can be floaters
+
+[colour]
+green_hue    = [0.17, 0.45]
+yellow_hue   = [0.08, 0.17]
+yellow_s_min = 0.25
+red_lo       = 0.08                # hue < red_lo or hue > red_hi = red
+red_hi       = 0.90
+unj_s_max    = 0.12                # saturation or value below these = colour not judgeable
+unj_v_max    = 0.10
+dark_v_max   = 0.25                # darker than this: hue is not reliable, so not judged (still counted as volume)
+colour_k     = 20                  # colour smoothing: majority vote of the 20 nearest judgeable neighbours; 0 = off
+colour_r_cm  = 1.0
+
+[volume]
+voxel_cm    = [1.5, 1.0, 0.5]      # voxel sizes for the per-pod table; the first is the one compared with the leaf photos
+opacity_min = 0.0                  # Gaussians fainter than this are dropped (0 = keep all)
+
+[batch]
+growth_voxels      = [1.5, 1.0]    # growth curves: the first one is the main result
+harvest_voxels     = [0.5, 1.0, 1.5, 2.0]
+opacity_thresholds = [0.0, 0.1, 0.3, 0.5, 0.7, 0.9]
+pod_top_grid       = [10, 12, 14, 16, 18, 20]
+floor_out_grid     = [0, 5, 10]

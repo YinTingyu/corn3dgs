@@ -1,0 +1,53 @@
+# Project settings: where the data lives, and what is different between the two plantings.
+#
+# All paths are relative to the project root (the folder that holds this config/ folder),
+# so the whole project can be moved to another computer without editing anything here.
+
+[paths]
+splats      = "data/splats"           # <round>/<light>/<light>_<date>.ply, plus the SuperSplat selections next to it
+leaf_photos = "data/raw/leaf_photos"  # <light>/<pod>_<nn>.jpg, plus the <pod>_<nn>_calib.json made by `corn3dgs leaf calibrate`
+light_meter = "data/raw/light_meter"  # ESPD_*.xls files exported from the PG200N spectrometer
+tables      = "data/raw/tables"       # fresh weight, plant height, lighting spec sheets
+outputs     = "outputs"               # everything the code writes goes under here
+
+# ---- one block per planting ----
+# big_tray         : clouds that were filmed inside the black 9 cm tray. Their bottoms are hidden, so the
+#                    height zero is taken from the pod rims instead (see pointcloud/big_tray.py).
+#                    Either a list of dates (all four trays that day), cloud names (one tray only),
+#                    "all", or "auto" = every cloud that has no _floor.ply selection.
+# fresh_weight     : harvest fresh weight table. Leave empty if there is none (planting 1).
+# calibration_date : the harvest scan that is paired with the fresh weight.
+# dli_table        : zone DLI. Both plantings used the same racks and lamps, so they share one table.
+# rim_from         : big-tray dates, how the pod rim is found in each block: "soil" (from the green leaves,
+#                    needs a dense green canopy) or "edge" (where the dense pod layer stops; for sparse plants).
+# fert_start       : first day of fertilising, "" if never. Used by `corn3dgs mixed`: fertilising is fully tied
+#                    to the planting, so its effect can't be estimated on its own; but the dates before it
+#                    started are unfertilised in both plantings and are also analysed separately.
+# pod_table        : one row per pod and measuring date: plants per pod (Density), heights, zone DLI.
+#                    Used by `corn3dgs mixed`.
+
+[rounds.1st]
+big_tray         = "all"              # every planting-1 scan was in the big tray
+rim_from         = "edge"             # sparse, mostly yellow / red plants: too few green points to find the soil
+fresh_weight     = ""
+calibration_date = ""
+fert_start       = ""                 # never fertilised
+dli_table        = "data/raw/tables/Fresh_weight_with_spectrum.xlsx"
+pod_table        = "data/raw/tables/May27-June20_PodLevel.xlsx"
+
+[rounds.2nd]
+big_tray         = ["2026-08-16", "2026-08-22", "2026-08-28", "14h_2026-09-04", "10h_2026-09-04"]
+rim_from         = "soil"
+fresh_weight     = "data/raw/tables/Fresh_weight_with_spectrum.xlsx"
+calibration_date = "2026-09-11"
+fert_start       = "2026-08-29"       # Bio-Plus NPK 8-8-8 once, then Nutrivit 20-20-20 with the daily watering
+dli_table        = "data/raw/tables/Fresh_weight_with_spectrum.xlsx"
+pod_table        = "data/raw/tables/Aug16-Sep10_PodLevel.xlsx"
+
+# ---- lamps over each tray (same racks in both plantings) ----
+# Only used by `corn3dgs mixed`, as the lamp term of the sensitivity model.
+[lamps]
+08h = "horticultural"     # 6 x Barrina T8 grow tubes, 2 ft
+14h = "horticultural"
+10h = "general"           # 5 x Daiyo LT5-59-DL + 1 x LT5-59-WW, 4 ft
+12h = "general"

@@ -1,0 +1,42 @@
+# Parameters for the leaf photos. Hue, saturation and value are all 0-1 (e.g. a brightness limit of 170 is 170 / 255 = 0.667)
+
+
+[white_balance]
+wb_percentile = 70.0          # the brightest 30% of pixels are taken as the white paper
+
+[leaf_vs_background]
+s_min = 0.15             # leaf = saturated enough ...
+v_dark_max = 0.68             # ... OR dark enough
+
+[ruler]
+ruler_hue_lo        = 0.78    # pink tick marks, hue from here round to red_hue_lo
+ruler_pink_s_min    = 0.05
+ruler_dark_s_max    = 0.12    # black tick marks: dark and grey
+ruler_dark_v_max    = 0.30
+ruler_bridge_radius = 20      # join leaf pieces cut by tick marks, inside the ruler boxes only (px); 0 = off
+ruler_leaf_mode     = "green" # leaf under the ruler: "green", "unjudgeable" or "asis"
+
+[morphology]
+close_radius = 0             # no closing and no hole filling: gaps between leaves and glare holes overlap in size
+max_hole_px = 0
+min_object_px = 1000
+
+[colour]
+green_hue = [0.18, 0.45]
+yellow_hue = [0.08, 0.17]
+yellow_s_min = 0.25
+red_hue_lo = 0.08
+red_hue_hi = 0.90
+unjudgeable_s_max = 0.15
+unjudgeable_v_max = 0.10
+
+[desk]
+desk_hue_lo = 0.05            # only used on photos with a desk polygon in the calib file
+desk_hue_hi = 0.16
+desk_v_min = 0.58
+
+[figures]
+crop_to_roi = true
+crop_margin = 80
+fig_dpi = 150
+qc_dpi = 90

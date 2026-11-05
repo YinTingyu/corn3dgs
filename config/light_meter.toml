@@ -1,0 +1,11 @@
+# Parameters for the light meter analysis (corn3dgs light).
+
+# Shelf (tray number in the file names) -> photoperiod in hours
+tray_to_hours = { "1" = 10, "2" = 12, "3" = 8, "4" = 14 }
+
+# Points that were mislabelled in the file name: "<side>_<tray>_<distance>" -> correct distance (cm).
+# ESPD_Left_tray1_110cm_PPFD was really measured at 10 cm.
+distance_fixes = { "Left_1_110" = 10 }
+
+# Lamps are split by colour temperature: the two groups sit at ~5360 K and ~3330 K
+warm_cct_max = 4000

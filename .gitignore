@@ -1,0 +1,22 @@
+# Data and results stay on the laptop (too big, and not ours to publish yet)
+data/
+outputs/
+archive/
+*.ply
+*.ssproj
+*.mp4
+*.MP4
+*.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+build/
+dist/
+
+# macOS / editors
+.DS_Store
+.vscode/

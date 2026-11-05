@@ -1,0 +1,10 @@
+# Python 3.11+ (tomllib is built in from 3.11). Works with numpy 1.x and 2.x.
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+matplotlib>=3.7
+plyfile>=1.0
+pillow>=10.0
+openpyxl>=3.1      # pandas needs it to read the .xlsx sheets
+statsmodels>=0.14  # mixed models (corn3dgs mixed)
+pytest>=7          # only for running tests/

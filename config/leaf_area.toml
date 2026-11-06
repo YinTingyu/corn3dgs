@@ -2,22 +2,22 @@
 
 
 [white_balance]
-wb_percentile = 70.0          # the brightest 30% of pixels are taken as the white paper
+wb_percentile = 70.0   # the brightest 30% of pixels are taken as the white paper
 
 [leaf_vs_background]
-s_min = 0.15             # leaf = saturated enough ...
-v_dark_max = 0.68             # ... OR dark enough
+s_min = 0.15 # paper is white and has high saturation
+v_dark_max = 0.68   # paper has high brightness
 
 [ruler]
-ruler_hue_lo        = 0.78    # pink tick marks, hue from here round to red_hue_lo
-ruler_pink_s_min    = 0.05
-ruler_dark_s_max    = 0.12    # black tick marks: dark and grey
-ruler_dark_v_max    = 0.30
-ruler_bridge_radius = 20      # join leaf pieces cut by tick marks, inside the ruler boxes only (px); 0 = off
-ruler_leaf_mode     = "green" # leaf under the ruler: "green", "unjudgeable" or "asis"
+ruler_hue_lo = 0.78  # pink tick marks
+ruler_pink_s_min = 0.05
+ruler_dark_s_max = 0.12  # black tick marks
+ruler_dark_v_max = 0.30
+ruler_bridge_radius = 20  # join leaf pieces cut by tick marks, inside the ruler boxes only
+ruler_leaf_mode = "green" # leaves are under the ruler in some photos
 
 [morphology]
-close_radius = 0             # no closing and no hole filling: gaps between leaves and glare holes overlap in size
+close_radius = 0  # no closing and no hole filling
 max_hole_px = 0
 min_object_px = 1000
 
